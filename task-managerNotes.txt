@@ -1,0 +1,46 @@
+//////////////////////References & URL 
+
+https://mongodb.github.io/node-mongodb-native/4.0/
+
+
+
+
+/// connecting to DB and adding a record 
+
+MongoClient.connect(connnectionUrl, { useNewUrlParser: true }, (error, client) => {
+    if(error){
+        return console.log('MONGODB.JS Line 13 : Unable to connect to the database')
+    }
+    //console.log('MONGODB.JS Line 15 : Connected Correctly!')
+    const db = client.db(databaseName)
+
+    db.collection('users').insertOne({
+        name: 'Marty',
+        age: 49
+    }, (error, result) => {
+        if(error) {
+            return console.log('MONGODB.JS Line 23 :unable to insert user')
+        }
+        console.log( result.ops)
+    })
+})
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////   This inserts x2 documents ///////////////////////////////////////////
+  db.collection('users').insertMany([
+        {
+            name: 'Jen',
+            age: 28
+        }, {
+            name: 'Gunther', 
+            age: 27
+        }
+    ], (error, result) => {
+        if(error){
+            return console.log('Unable to insert document')
+        }
+        console.log(result.ops)
+
+    })
+//////////////////////////////////////////////////////////////////////////////////////////////
