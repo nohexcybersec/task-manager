@@ -1,12 +1,17 @@
 // I want to push this out as second version for github
+//### once you update the package.json file and make changes to the following SCRIPT; then you can run the command : npm run dev
+// "scripts": {
+//     "start": "node src/index.js",
+//     "dev": "nodemon src/index.js"
+//   },
+
+
 
 
 const express = require('express')
 require('./db/mongoose')
 const User = require('./models/user')
-
-
-
+const Task = require('./models/task')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -46,13 +51,30 @@ app.post('/users', (req, res) => {
     //console.log(user)
 
     user.save().then(() => {
-        res.send(user)
+        res.status(201).send(user)
     }).catch((e) => {
         res.status(400).send(e)
          
     })
 
 })
+
+
+app.post('/tasks', (req, res) => {
+    const task = new Task(req.body)
+    
+    task.save().then(() => {
+        res.status(201).send(task)
+    }).catch((e) => {
+        res.status(400).send(e)         
+    })
+})
+
+
+
+
+
+
 
 
 
